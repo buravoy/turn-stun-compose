@@ -15,6 +15,7 @@ services:
     volumes:
       - ./turnserver.conf:/etc/coturn/turnserver.conf:ro
       - ./logs:/var/log/coturn
+      - /etc/nginx/ssl/stunturn.devshit.ru_P256/:/etc/coturn/ssl/  # Монтируем сертификаты
     environment:
       - TURN_EXTERNAL_IP=${TURN_EXTERNAL_IP}
     restart: unless-stopped
