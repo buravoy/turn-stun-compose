@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  coturn:
+    image: coturn/coturn:latest
+    container_name: coturn-server
+    network_mode: host
+    # Альтернатива если не хотите host network:
+    # ports:
+    #   - "3478:3478/udp"
+    #   - "3478:3478/tcp"
+    #   - "5349:5349/udp"
+    #   - "5349:5349/tcp"
+    #   - "49152-49162:49152-49162/udp"  # уменьшенный диапазон для теста
+    volumes:
+      - ./turnserver.conf:/etc/coturn/turnserver.conf:ro
+      - ./logs:/var/log/coturn
+    environment:
+      - TURN_EXTERNAL_IP=${TURN_EXTERNAL_IP}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "turnserver", "-c", "/etc/coturn/turnserver.conf", "--test"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
