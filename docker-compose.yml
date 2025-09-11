@@ -5,14 +5,8 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     network_mode: host
-#    ports:
-#      - "3478:3478/udp"
-#      - "3478:3478/tcp"
-#      - "5349:5349/udp"
-#      - "5349:5349/tcp"
-#      - "49152-65535:49152-65535/udp"
     environment:
       - TZ=Europe/Moscow
     volumes:
-      - /etc/nginx/ssl/stunturn.devshit.ru_P256/:/etc/coturn/certs/  # Монтируем сертификаты
+      - /etc/nginx/ssl/stunturn.devshit.ru_P256/:/etc/coturn/certs/
 
